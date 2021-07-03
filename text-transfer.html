@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text transfer</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+<label for="input"></label><textarea id="input" rows="10" cols="100"></textarea>
+<script>
+    const input = $("#input");
+
+    let setMark = false
+
+    // noinspection SpellCheckingInspection
+    input.bind("input propertychange", () => {
+        setMark = true;
+    });
+
+    const request = (isSet) => {
+        let data = {};
+        if (isSet) {
+            data = {
+                text: input.val()
+            };
+        }
+        console.log(data);
+        let result;
+        $.ajax({
+            url: "./text-transfer",
+            data: data,
+            error: (e) => {
+                console.log("error: ", e);
+            },
+            success: (r) => {
+                result = r.result;
+            },
+            "async": false,
+            method: "GET"
+        });
+        return result;
+    }
+
+    const initValue = request(false);
+    console.log("initValue: ", initValue);
+    input.val(initValue);
+
+    (async () => {
+        // noinspection InfiniteLoopJS
+        for (; ;) {
+            console.log("setMark: ", setMark);
+            const setValue = request(setMark);
+            setMark = false;
+            input.val(setValue);
+            await sleep(1000);
+        }
+    })();
+
+    function sleep(millis) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(null);
+            }, millis);
+        });
+    }
+</script>
+</body>
+</html>

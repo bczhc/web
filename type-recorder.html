@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Type recorder</title>
+</head>
+<body>
+<label for="box"></label><textarea id="box" cols="50" rows="10"></textarea>
+<br>
+<button id="record">record</button>
+<button id="start">start</button>
+<script>
+    const record = document.getElementById("record");
+    const start = document.getElementById("start");
+    const textBox = document.getElementById("box");
+
+    let eventList = [];
+    let startTime;
+
+    record.onclick = () => {
+        eventList = [];
+
+        startTime = new Date().getTime();
+    };
+
+    textBox.onkeyup = () => {
+        const interval = new Date().getTime() - startTime;
+        eventList.push([textBox.value, interval]);
+    };
+
+    start.onclick = () => {
+        textBox.value = "";
+        for (let a of eventList) {
+            setTimeout(() => {
+                textBox.value = a[0];
+            }, a[1]);
+        }
+    };
+</script>
+</body>
+</html>
