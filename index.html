@@ -12,9 +12,10 @@
 
     let setMark = false
 
-    input[0].onkeydown = () => {
-        setMark = true
-    }
+    // noinspection SpellCheckingInspection
+    input.bind("input propertychange", () => {
+        setMark = true;
+    });
 
     const request = (isSet) => {
         let data = {};
