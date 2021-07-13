@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+<form action="javascript:">
+    <label for="username-input"></label><input type="text" id="username-input" placeholder="username"><br>
+    <label for="password-input"></label><input type="password" id="password-input" placeholder="password"><br>
+    <input type="submit" id="submit-button">
+</form>
+<br>
+<label for="token-ta"></label><textarea name="token-ta" id="token-ta" cols="50" rows="10"></textarea>
+<br>
+<button id="request-btn">Request</button>
+
+
+<script>
+    const usernameInput = $("#username-input");
+    const passwordInput = $("#password-input");
+    const submitButton = $("#submit-button");
+
+    const tokenTA = $("#token-ta");
+    const requestBtn = $("#request-btn");
+
+    submitButton[0].onclick = () => {
+        const username = usernameInput.val();
+        const password = passwordInput.val();
+
+        $.ajax({
+            url: "/login",
+            data: {
+                username: username,
+                password: password
+            },
+            method: "POST",
+            success: (d) => {
+                console.log(d);
+            },
+            error: (e) => {
+                console.log(e);
+            }
+        })
+    }
+
+    requestBtn[0].onclick = () => {
+        const token = tokenTA.val();
+        $.ajax({
+            url: "/request",
+            data: {
+                token: token
+            },
+            method: "GET",
+            success: (d) => {
+                console.log(d);
+            },
+            error: (e) => {
+                console.log(e);
+            }
+        })
+    }
+</script>
+</body>
+</html>
