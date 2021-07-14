@@ -12,8 +12,7 @@
     <input type="submit" id="submit-button">
 </form>
 <br>
-<label for="token-ta"></label><textarea name="token-ta" id="token-ta" cols="50" rows="10"></textarea>
-<br>
+
 <button id="request-btn">Request</button>
 
 
@@ -22,7 +21,6 @@
     const passwordInput = $("#password-input");
     const submitButton = $("#submit-button");
 
-    const tokenTA = $("#token-ta");
     const requestBtn = $("#request-btn");
 
     submitButton[0].onclick = () => {
@@ -38,26 +36,33 @@
             method: "POST",
             success: (d) => {
                 console.log(d);
+                if (d.status === 0) {
+                    alert("Login succeeded")
+                } else {
+                    alert(d.msg)
+                }
             },
             error: (e) => {
                 console.log(e);
+                alert(`Request failed ${e}`)
             }
         })
     }
 
     requestBtn[0].onclick = () => {
-        const token = tokenTA.val();
         $.ajax({
             url: "/request",
-            data: {
-                token: token
-            },
+            data: {},
             method: "GET",
             success: (d) => {
                 console.log(d);
+                if (d.status === 0) {
+                    alert(`Authentication succeeded, username: ${d.data.username}`)
+                }
             },
             error: (e) => {
                 console.log(e);
+                alert(`Request failed ${e}`)
             }
         })
     }
