@@ -1,2 +1,3 @@
-.idea
-web.iml
+.idea/
+/web.iml
+/node_modules/
