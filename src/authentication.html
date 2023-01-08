@@ -17,54 +17,54 @@
 
 
 <script>
-    const usernameInput = $("#username-input");
-    const passwordInput = $("#password-input");
-    const submitButton = $("#submit-button");
+    window.onload = () => {
+        const usernameInput = $("#username-input");
+        const passwordInput = $("#password-input");
+        const submitButton = $("#submit-button");
 
-    const requestBtn = $("#request-btn");
+        const requestBtn = $("#request-btn");
 
-    submitButton[0].onclick = () => {
-        const username = usernameInput.val();
-        const password = passwordInput.val();
+        submitButton[0].onclick = () => {
+            const username = usernameInput.val();
+            const password = passwordInput.val();
 
-        $.ajax({
-            url: "/login",
-            data: {
-                username: username,
-                password: password
-            },
-            method: "POST",
-            success: (d) => {
-                console.log(d);
-                if (d.status === 0) {
-                    alert("Login succeeded")
-                } else {
-                    alert(d.msg)
+            $.ajax({
+                url: "/login",
+                data: {
+                    username: username,
+                    password: password
+                },
+                method: "POST",
+                success: (d) => {
+                    console.log(d);
+                    if (d.status === 0) {
+                        alert("Login succeeded")
+                    } else {
+                        alert(d['message'])
+                    }
+                },
+                error: (e) => {
+                    console.log(e);
+                    alert(`Request failed ${e}`)
                 }
-            },
-            error: (e) => {
-                console.log(e);
-                alert(`Request failed ${e}`)
-            }
-        })
-    }
+            })
+        }
 
-    requestBtn[0].onclick = () => {
-        $.ajax({
-            url: "/request",
-            data: {},
-            method: "GET",
-            success: (d) => {
-                console.log(d);
-                if (d.status === 0) {
-                    alert(`Authentication succeeded, username: ${d.data.username}`)
+        requestBtn[0].onclick = () => {
+            $.ajax({
+                url: "/request",
+                data: {},
+                method: "GET",
+                success: (d) => {
+                    console.log(d);
+                    alert(`Authentication succeeded, username: ${d['username']}`)
+                },
+                error: (e) => {
+                    console.log(e);
+                    alert(`Request failed, status: ${e.status}`)
                 }
-            },
-            error: (e) => {
-                console.log(e);
-                alert(`Request failed ${e}`)
-            }
-        })
+            })
+        }
     }
 </script>
 </body>
