@@ -7,6 +7,12 @@ let htmlFiles = fs.readdirSync(srcDir)
     .filter(file => path.extname(file) === '.html')
     .map(x => path.join(srcDir, x))
 
+let lottieDir = './src/lottie'
+let lottieFiles = fs.readdirSync(lottieDir)
+    .map(x => path.join(lottieDir, x))
+
+let filesToCopy = htmlFiles.concat(['./src/lottie'])
+
 module.exports = {
     entry: "./bootstrap.js",
     output: {
@@ -16,6 +22,6 @@ module.exports = {
     },
     mode: "development",
     plugins: [
-        new CopyWebpackPlugin(htmlFiles)
+        new CopyWebpackPlugin(filesToCopy)
     ],
 };
