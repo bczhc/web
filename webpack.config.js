@@ -11,7 +11,7 @@ let lottieDir = './src/lottie'
 let lottieFiles = fs.readdirSync(lottieDir)
     .map(x => path.join(lottieDir, x))
 
-let filesToCopy = htmlFiles.concat(['./src/lottie'])
+let filesToCopy = htmlFiles.concat(['./src/lottie', './src/092'])
 
 module.exports = {
     entry: "./bootstrap.js",

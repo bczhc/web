@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    @font-face {
+        font-family: "092字根专用";
+        src: url('./092字根专用.otf');
+    }
+    #output {
+        font-family: "092字根专用", sans-serif;
+    }
+</style>
+<body>
+<label>
+    <input type="text" id="input">
+</label>
+<div id="output"></div>
+<script src="bootstrap.js"></script>
+<script>
+    window.onload = () => {
+        $.get("./全拆分表.txt", function (data) {
+            data = data.split('\n').map(x => x.split(' '))
+            let map = {}
+            console.log(data.length);
+            for (let d of data) {
+                data[d[1]] = d[2]
+            }
+            let input = $("#input");
+            let output = $('#output')
+            input.bind("input propertychange", () => {
+                let text = input.val();
+                let chars = [...text];
+                let outputText = ''
+                for (let c of chars) {
+                    outputText += `${c}: ${data[c]}<br/>`
+                }
+                output.html(outputText)
+            });
+        });
+    }
+</script>
+</body>
+</html>
