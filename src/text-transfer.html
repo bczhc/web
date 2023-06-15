@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Text transfer</title>
-    <script src="bootstrap.js"></script>
+    <script type="module" lang="ts">
+        import $ from 'jquery';
+        window['$'] = $;
+    </script>
 </head>
 <body>
 <label for="input"></label><textarea id="input" rows="10" cols="100"></textarea>

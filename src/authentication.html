@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <script src="bootstrap.js"></script>
 </head>
 <body>
 <form action="javascript:">
@@ -16,7 +15,8 @@
 <button id="request-btn">Request</button>
 
 
-<script>
+<script type="module" lang="ts">
+    import $ from 'jquery';
     window.onload = () => {
         const usernameInput = $("#username-input");
         const passwordInput = $("#password-input");

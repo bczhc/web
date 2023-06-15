@@ -7,7 +7,7 @@
 <style>
     @font-face {
         font-family: "092字根专用";
-        src: url('./092字根专用.otf');
+        src: url('/092/092字根专用.otf');
     }
     #output {
         font-family: "092字根专用", sans-serif;
@@ -18,12 +18,14 @@
     <input type="text" id="input">
 </label>
 <div id="output"></div>
-<script src="bootstrap.js"></script>
-<script>
+<script type="module" lang="ts">
+    import $ from 'jquery';
+    import tableFile from '/092/全拆分表.txt';
+
+    console.log(tableFile);
     window.onload = () => {
-        $.get("./全拆分表.txt", function (data) {
+        $.get(tableFile, function (data) {
             data = data.split('\n').map(x => x.split(' '))
-            let map = {}
             console.log(data.length);
             for (let d of data) {
                 data[d[1]] = d[2]
