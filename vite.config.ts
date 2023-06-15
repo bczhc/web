@@ -14,6 +14,7 @@ export default defineConfig({
                 html3: resolve(__dirname, 'src/lottie.html'),
                 html4: resolve(__dirname, 'src/text-transfer.html'),
                 html5: resolve(__dirname, 'src/type-recorder.html'),
+                html6: resolve(__dirname, 'src/diary.html'),
             },
         },
     },
