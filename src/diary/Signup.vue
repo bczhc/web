@@ -24,7 +24,8 @@
                      :maxlength="MAX_PASSWORD_LEN"
             ></n-input>
             <div style="text-align: center;">
-                <n-button attr-type="submit">Sign up</n-button>
+                <n-button attr-type="submit" @click="showMessage">Sign up
+                </n-button>
             </div>
         </n-space>
     </div>
@@ -40,6 +41,9 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {validateEmail, VueRef} from "../lib.ts";
+import {useMessage} from 'naive-ui';
+
+const message = useMessage()
 
 const MIN_PASSWORD_LEN = 1;
 const MIN_USERNAME_LEN = 3;
@@ -76,5 +80,9 @@ function usernameStatus(username: string | null) {
 function emailStatus(email: string | null) {
     if (email == null) return inputStatus(true);
     return inputStatus(validateEmail(email));
+}
+
+function showMessage() {
+    message.info('Sign up!');
 }
 </script>
