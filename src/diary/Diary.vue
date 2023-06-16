@@ -1,5 +1,5 @@
 <script setup>
-import DiaryMain from "./components/DiaryMain.vue";
+import DiaryMain from "./Main.vue";
 </script>
 
 <template>

@@ -18,4 +18,10 @@ export default defineConfig({
             },
         },
     },
+    server: {
+        proxy: {
+            '/routes': 'http://localhost:8000',
+            '^/app/.*$': 'http://localhost:8000'
+        }
+    }
 })
