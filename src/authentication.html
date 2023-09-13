@@ -57,7 +57,7 @@
                 method: "GET",
                 success: (d) => {
                     console.log(d);
-                    alert(`Authentication succeeded, username: ${d['username']}`)
+                    alert(`Authentication succeeded, username: ${d['data']['username']}`)
                 },
                 error: (e) => {
                     console.log(e);
