@@ -29,14 +29,7 @@
         </n-space>
     </div>
 </template>
-<style>
-#form {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-</style>
+
 <script setup lang="ts">
 import {ref} from "vue";
 import {validateEmail, VueRef} from "../lib.ts";
