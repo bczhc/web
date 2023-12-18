@@ -5,6 +5,6 @@
         "./*"
       ]
     },
-    "alwaysStrict": true,
+    "alwaysStrict": true
   }
 }

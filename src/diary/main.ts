@@ -1,7 +1,8 @@
 import {createApp} from "vue";
-import Diary from "./Diary.vue";
 import naive from 'naive-ui';
+import {router} from "./router/router";
 
-let app = createApp(Diary);
+let app = createApp({});
 app.use(naive);
+app.use(router);
 app.mount("#app");

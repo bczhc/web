@@ -23,5 +23,10 @@ export default defineConfig({
             '/routes': 'http://localhost:8000',
             '^/app/.*$': 'http://localhost:8000'
         }
+    },
+    resolve: {
+        alias: {
+            'vue': 'vue/dist/vue.esm-bundler.js',
+        },
     }
 })
