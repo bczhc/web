@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import Signin from "./components/Signin.vue";
-import {useRoute, useRouter} from "vue-router";
+import {useRouter} from "vue-router";
 
 let router = useRouter();
-let route = useRoute();
 
 function signupClick() {
-  console.log(route.path);
   router.push('signup');
 }
 </script>

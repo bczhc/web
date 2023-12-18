@@ -20,8 +20,11 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '/routes': 'http://localhost:8000',
-            '^/app/.*$': 'http://localhost:8000'
+            '/api': {
+                target: 'http://localhost:8000',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, '')
+            },
         }
     },
     resolve: {
