@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import {fetchMe} from "./lib";
-import {ref} from "vue";
-import {useMessage} from 'naive-ui';
+import {h, ref} from "vue";
+import {MenuOption, useMessage} from 'naive-ui';
 import Centered from "./components/Centered.vue";
+import {RouterLink} from "vue-router";
 
 let userInfo = ref<object>()
+let username = ref<string>()
 let message = useMessage();
 
 window.onload = () => {
   fetchMe().then(x => {
     if (x['status'] === 0) {
       userInfo.value = x;
+      username.value = x['data']['username'] as string;
     } else {
       message.error('无效会话');
     }
@@ -19,11 +22,49 @@ window.onload = () => {
   })
 };
 
+let menuOptions: MenuOption[] = [
+  {
+    label: () => h(
+        RouterLink,
+        {
+          to: {
+            path: '/home'
+          }
+        },
+        {
+          default: () => 'Home'
+        }
+    ),
+    key: 'k1'
+  },
+]
 </script>
 
 <template>
-  <Centered>
+  <n-page-header style="padding: 1% 2%; border-bottom: lightgray solid 1px">
+    <template #title>
+      <a
+          href="/diary/"
+          style="text-decoration: none; color: inherit"
+      >
+        My Diary
+      </a>
+    </template>
+    <template #header v-if="false">
+      <n-menu :options="menuOptions" mode="horizontal"/>
+    </template>
+    <template #extra v-if="username">
+      <router-link to="/profile" class="plain-a">{{ username }}</router-link>
+    </template>
+  </n-page-header>
+  <Centered v-if="userInfo">
     <h1>This is the Home Page</h1>
-    <div v-if="userInfo">{{ userInfo }}</div>
   </Centered>
 </template>
+
+<style scoped>
+.plain-a, .plain-a:hover, .plain-a:visited, .plain-a:active {
+  text-decoration: none;
+  color: inherit;
+}
+</style>
