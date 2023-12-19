@@ -1,7 +1,7 @@
 import * as $ from "jquery";
 
 export async function fetchMe() {
-    return new Promise<object>(x => {
+    return new Promise<object>((x, r) => {
         $.ajax({
             method: 'get',
             async: true,
@@ -11,7 +11,8 @@ export async function fetchMe() {
                 x(data);
             },
             error: e => {
-                console.log(e);
+                console.log('error ' + e);
+                r(e);
             },
         })
     });
