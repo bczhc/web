@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router";
-import * as $ from 'jquery';
 import {fetchMe} from "./lib";
 
 let router = useRouter();

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import Signin from "./components/Signin.vue";
 import {useRouter} from "vue-router";
+import {useI18n} from "vue-i18n";
 
 let router = useRouter();
+let {t} = useI18n();
 
 function signupClick() {
   router.push('signup');
@@ -13,7 +15,7 @@ function signupClick() {
   <div class="form">
     <n-space vertical align="center">
       <Signin/>
-      <n-a @click="signupClick">Sign up</n-a>
+      <n-a @click="signupClick">{{ t('signup_btn') }}</n-a>
     </n-space>
   </div>
 </template>

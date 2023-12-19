@@ -2,30 +2,30 @@
 <template>
     <div id="form">
         <n-space vertical justify="center">
-            <n-h1 style="text-align: center">Sign up</n-h1>
-            <n-input placeholder="Username" id="username-input"
+            <n-h1 style="text-align: center">{{ t('signup_title') }}</n-h1>
+            <n-input :placeholder="t('username_placeholder')" id="username-input"
                      v-model:value="username"
                      :status="usernameStatus(username)"
                      :maxlength="MAX_USERNAME_LEN"
             ></n-input>
-            <n-input placeholder="Email" id="email-input"
+            <n-input :placeholder="t('email_placeholder')" id="email-input"
                      v-model:value="email"
                      :status="emailStatus(email)"
             ></n-input>
-            <n-input placeholder="Password" id="password-input"
+            <n-input :placeholder="t('password_placeholder')" id="password-input"
                      v-model:value="password"
                      :status="passwordStatus(password, passwordCheck)"
                      type="password"
                      :maxlength="MAX_PASSWORD_LEN"
             ></n-input>
-            <n-input placeholder="Re-enter Password" id="password-check-input"
+            <n-input :placeholder="t('confirm_password_placeholder')" id="password-check-input"
                      v-model:value="passwordCheck"
                      :status="passwordStatus(password, passwordCheck)"
                      type="password"
                      :maxlength="MAX_PASSWORD_LEN"
             ></n-input>
             <div style="text-align: center;">
-                <n-button attr-type="submit">Sign up</n-button>
+                <n-button attr-type="submit">{{ t('signup_btn') }}</n-button>
             </div>
         </n-space>
     </div>
@@ -34,6 +34,9 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {validateEmail, VueRef} from "../../lib";
+import {useI18n} from "vue-i18n";
+
+let { t } = useI18n()
 
 const MIN_PASSWORD_LEN = 1;
 const MIN_USERNAME_LEN = 3;

@@ -4,6 +4,9 @@ import {h, ref} from "vue";
 import {MenuOption, useMessage} from 'naive-ui';
 import Centered from "./components/Centered.vue";
 import {RouterLink} from "vue-router";
+import {useI18n} from "vue-i18n";
+
+let {t} = useI18n();
 
 let userInfo = ref<object>()
 let username = ref<string>()
@@ -15,10 +18,10 @@ window.onload = () => {
       userInfo.value = x;
       username.value = x['data']['username'] as string;
     } else {
-      message.error('无效会话');
+      message.error(t('invalid_session_message'));
     }
   }).catch(_ => {
-    message.error('无效会话');
+    message.error(t('invalid_session_message'));
   })
 };
 
@@ -58,7 +61,7 @@ let menuOptions: MenuOption[] = [
     </template>
   </n-page-header>
   <Centered v-if="userInfo">
-    <h1>This is the Home Page</h1>
+    <h1>This is the Home Page -- TODO</h1>
   </Centered>
 </template>
 
