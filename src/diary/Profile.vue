@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import Centered from "./components/Centered.vue";
 import {useI18n} from "vue-i18n";
-import {delay, fetchMe, genderToString, parseUserInfoJson, timestampToDateString, UserInfo} from "./lib";
+import {delay, fetchMe, GenderExt, ServerUserProfile, timestampToDateString} from "./lib";
 import {useMessage} from 'naive-ui';
 import {ref} from "vue";
 import UserProfileField from "./components/UserProfileField.vue";
 
 let {t} = useI18n();
 let message = useMessage();
-let userInfo = ref<UserInfo>()
+let userProfile = ref<ServerUserProfile>()
 
 fetchMe().then(x => {
-  userInfo.value = parseUserInfoJson(x['data']);
-  console.log(userInfo.value);
+  userProfile.value = x['data'] as ServerUserProfile;
+  console.log(userProfile.value);
 }).catch(() => {
   message.error(t('invalid_session_message'))
 })
@@ -22,15 +22,17 @@ fetchMe().then(x => {
   <Centered>
     <n-h1>{{ t('user_profile_title') }}</n-h1>
 
-    <div v-if="userInfo">
-      <UserProfileField :title="t('user_profile_username')" :content="userInfo.username"/>
-      <UserProfileField :title="t('user_profile_name')" :content="userInfo.name" :on-save="async (x) => {
+    <div v-if="userProfile">
+      <UserProfileField :title="t('user_profile_username')" :content="userProfile.username"/>
+      <UserProfileField :title="t('user_profile_name')" :content="userProfile.name" :on-save="async (x) => {
         console.log(x);
         await delay(1000, true);
       }"/>
-      <UserProfileField :title="t('user_profile_email')" :content="userInfo.email"/>
-      <UserProfileField :title="t('user_profile_signup_time')" :content="timestampToDateString(userInfo.signup_time)"/>
-      <UserProfileField :title="t('user_profile_gender')" :content="genderToString(userInfo.gender)"/>
+      <UserProfileField :title="t('user_profile_email')" :content="userProfile.email"/>
+      <UserProfileField :title="t('user_profile_signup_time')"
+                        :content="timestampToDateString(userProfile.signupTime)"/>
+      <UserProfileField :title="t('user_profile_gender')"
+                        :content="GenderExt.toString(GenderExt.parseServerGender(userProfile.gender))"/>
     </div>
     <div v-else>
       <n-h2>{{ t('loading_label') }}</n-h2>

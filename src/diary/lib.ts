@@ -1,6 +1,5 @@
 import * as $ from "jquery";
 import {useI18n} from "vue-i18n";
-import {Logger} from "vite";
 
 export async function fetchMe() {
     return new Promise<object>((x, r) => {
@@ -31,56 +30,64 @@ interface OtherGender {
 
 type Gender = BinaryGender | 'Unknown' | OtherGender;
 
-export interface UserInfo {
-    signup_time: number,
+type ServerGender = { tag: string, value?: string }
+
+export interface ServerUserProfile {
+    signupTime: number,
     username: string,
-    gender: Gender,
-    name?: string,
     email?: string,
+    name?: string,
+    gender: ServerGender,
 }
 
-type RustGender = { tag: string, value?: string }
-
-export function genderToString(gender: Gender) {
-    let {t} = useI18n();
-
-    switch (gender) {
-        case 'Unknown':
-            return t('gender_label_unknown');
-        case BinaryGender.Male:
-            return t('gender_label_male');
-        case BinaryGender.Female:
-            return t('gender_label_female');
-        default:
-            return t('gender_label_other', [gender.value]);
+export class GenderExt {
+    static toServerGender(self: Gender): ServerGender {
+        switch (self) {
+            case 'Unknown':
+                return {tag: 'Unknown'}
+            case BinaryGender.Male:
+                return {tag: 'Male'}
+            case BinaryGender.Female:
+                return {tag: 'Female'}
+            default:
+                return {tag: 'Other', value: self.value}
+        }
     }
-}
 
-export function parseUserInfoJson(json: object): UserInfo {
-    let gender: Gender;
-    let rustGender = json['gender'] as RustGender;
-    switch (rustGender.tag) {
-        case 'Male':
-            gender = BinaryGender.Male
-            break
-        case 'Female':
-            gender = BinaryGender.Female
-            break;
-        case 'Other':
-            gender = {
-                value: rustGender.value!!
-            };
-            break;
-        default:
-            gender = 'Unknown';
-            break;
+    static toString(self: Gender) {
+        let {t} = useI18n();
+
+        switch (self) {
+            case 'Unknown':
+                return t('gender_label_unknown');
+            case BinaryGender.Male:
+                return t('gender_label_male');
+            case BinaryGender.Female:
+                return t('gender_label_female');
+            default:
+                return t('gender_label_other', [self.value]);
+        }
     }
-    return {
-        gender,
-        username: json['username'],
-        name: json['name'],
-        email: json['email'],
-        signup_time: json['signupTime'],
+
+    static parseServerGender(sg: ServerGender) {
+        let gender: Gender;
+        switch (sg.tag) {
+            case 'Male':
+                gender = BinaryGender.Male
+                break
+            case 'Female':
+                gender = BinaryGender.Female
+                break;
+            case 'Other':
+                gender = {
+                    value: sg.value!!
+                };
+                break;
+            default:
+                gender = 'Unknown';
+                break;
+        }
+        return gender;
     }
 }
 
