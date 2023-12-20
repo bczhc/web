@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import Centered from "./components/Centered.vue";
 import {useI18n} from "vue-i18n";
-import {delay, fetchMe, GenderExt, ServerUserProfile, timestampToDateString} from "./lib";
+import {AXIOS_CONFIG_CONTENT_TYPE_JSON, fetchMe, GenderExt, ServerUserProfile, timestampToDateString} from "./lib";
 import {useMessage} from 'naive-ui';
 import {ref} from "vue";
 import UserProfileField from "./components/UserProfileField.vue";
+import {default as axios} from 'axios';
 
 let {t} = useI18n();
 let message = useMessage();
@@ -25,9 +26,13 @@ fetchMe().then(x => {
     <div v-if="userProfile">
       <UserProfileField :title="t('user_profile_username')" :content="userProfile.username"/>
       <UserProfileField :title="t('user_profile_name')" :content="userProfile.name" :on-save="async (x) => {
-        console.log(x);
-        await delay(1000, true);
-      }"/>
+        let newProfile = Object.assign({}, userProfile);
+        newProfile.name = x;
+        await axios.patch('/api/diary/user', newProfile,
+       AXIOS_CONFIG_CONTENT_TYPE_JSON
+        )
+       }
+      "/>
       <UserProfileField :title="t('user_profile_email')" :content="userProfile.email"/>
       <UserProfileField :title="t('user_profile_signup_time')"
                         :content="timestampToDateString(userProfile.signupTime)"/>
