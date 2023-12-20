@@ -17,6 +17,12 @@ fetchMe().then(x => {
 }).catch(() => {
   message.error(t('invalid_session_message'))
 })
+
+async function doPatchRequest() {
+  await axios.patch('/api/diary/user', userProfile.value,
+      AXIOS_CONFIG_CONTENT_TYPE_JSON
+  )
+}
 </script>
 
 <template>
@@ -25,15 +31,10 @@ fetchMe().then(x => {
 
     <div v-if="userProfile">
       <UserProfileField :title="t('user_profile_username')" :content="userProfile.username"/>
-      <UserProfileField :title="t('user_profile_name')" :content="userProfile.name" :on-save="async (x) => {
-        let newProfile = Object.assign({}, userProfile);
-        newProfile.name = x;
-        await axios.patch('/api/diary/user', newProfile,
-       AXIOS_CONFIG_CONTENT_TYPE_JSON
-        )
-       }
-      "/>
-      <UserProfileField :title="t('user_profile_email')" :content="userProfile.email"/>
+      <UserProfileField :title="t('user_profile_name')" :content="userProfile.name"
+                        :on-save="async x => {userProfile.name = x; await doPatchRequest()}"/>
+      <UserProfileField :title="t('user_profile_email')" :content="userProfile.email"
+                        :on-save="async x => {userProfile.email = x; await doPatchRequest()}"/>
       <UserProfileField :title="t('user_profile_signup_time')"
                         :content="timestampToDateString(userProfile.signupTime)"/>
       <UserProfileField :title="t('user_profile_gender')"
