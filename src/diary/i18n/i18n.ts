@@ -30,6 +30,7 @@ let messages = {
         gender_label_unknown: 'Secret',
         gender_label_other: '{0}',
         loading_label: 'Loading...',
+        user_profile_unset: 'Unset',
     },
     zh: {
         app_label: '我的日记',
@@ -60,6 +61,7 @@ let messages = {
         gender_label_unknown: '保密',
         gender_label_other: '{0}',
         loading_label: '加载中……',
+        user_profile_unset: '未设置',
     }
 };
 

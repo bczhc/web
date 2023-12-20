@@ -87,3 +87,15 @@ export function parseUserInfoJson(json: object): UserInfo {
 export function timestampToDateString(timestamp: number) {
     return new Date(timestamp * 1000).toString()
 }
+
+export async function delay(millis: number, failed: boolean = false): Promise<void> {
+    return new Promise((x, e) => {
+        setTimeout(() => {
+            if (failed) {
+                e()
+            } else {
+                x()
+            }
+        }, millis);
+    });
+}
