@@ -51,6 +51,7 @@ function onSaveClicked() {
     <n-space v-if="editStatus" align="center">
       <n-input :default-value="content" v-model:value="editContent"></n-input>
       <n-button @click="onSaveClicked" :disabled="!updating ? null : 'disabled'">Save</n-button>
+      <n-button @click="editStatus = false" :disabled="!updating ? null : 'disabled'">Cancel</n-button>
     </n-space>
   </div>
 </template>
