@@ -18,10 +18,10 @@ window.onload = () => {
       userInfo.value = x;
       username.value = x['data']['username'] as string;
     } else {
-      message.error(t('invalid_session_message'));
+      message.error(t('invalid_session_message'))
     }
   }).catch(_ => {
-    message.error(t('invalid_session_message'));
+    message.error(t('invalid_session_message'))
   })
 };
 

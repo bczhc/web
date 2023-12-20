@@ -3,9 +3,9 @@
 
 <template>
   <div class="center">
-    <n-space vertical align="center">
+    <div>
       <slot/>
-    </n-space>
+    </div>
   </div>
 </template>
 
