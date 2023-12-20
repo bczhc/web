@@ -26,7 +26,7 @@ fetchMe().then(x => {
       <UserProfileField :title="t('user_profile_username')" :content="userInfo.username"/>
       <UserProfileField :title="t('user_profile_name')" :content="userInfo.name" :on-save="async (x) => {
         console.log(x);
-        await delay(1000, true);
+        await delay(1000, false);
       }"/>
       <UserProfileField :title="t('user_profile_email')" :content="userInfo.email"/>
       <UserProfileField :title="t('user_profile_signup_time')" :content="timestampToDateString(userInfo.signup_time)"/>

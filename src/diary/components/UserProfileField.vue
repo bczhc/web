@@ -15,6 +15,7 @@ let message = useMessage();
 let editStatus = ref(false);
 let editContent = ref('');
 let updating = ref(false);
+let content = ref<string | null>(props.content);
 
 function onSaveClicked() {
   updating.value = true;
@@ -22,6 +23,8 @@ function onSaveClicked() {
   props.onSave?.(editContent.value).then(_ => {
     message.destroyAll();
     message.success('Updating succeeded');
+    content.value = editContent.value;
+    editStatus.value = false;
   }).catch(_ => {
     message.destroyAll();
     message.error('Updating failed');
